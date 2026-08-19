@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html.dark {
+    color-scheme: dark;
+    background-color: #030712;
+    color: #f8fafc;
+  }
+
+  body {
+    @apply transition-colors duration-200;
+  }
+
+  .dark option {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+
+  /* Custom dark scrollbar */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 9999px;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+
+  /* Theme Accent Colors Overrides */
+  html[data-accent="emerald"] .bg-blue-600 {
+    background-color: #059669 !important;
+  }
+  html[data-accent="emerald"] .hover\:bg-blue-700:hover {
+    background-color: #047857 !important;
+  }
+  html[data-accent="emerald"] .text-blue-600 {
+    color: #10b981 !important;
+  }
+  html[data-accent="emerald"] .border-l-blue-600 {
+    border-left-color: #059669 !important;
+  }
+
+  html[data-accent="purple"] .bg-blue-600 {
+    background-color: #9333ea !important;
+  }
+  html[data-accent="purple"] .hover\:bg-blue-700:hover {
+    background-color: #7e22ce !important;
+  }
+  html[data-accent="purple"] .text-blue-600 {
+    color: #a855f7 !important;
+  }
+  html[data-accent="purple"] .border-l-blue-600 {
+    border-left-color: #9333ea !important;
+  }
+
+  html[data-accent="indigo"] .bg-blue-600 {
+    background-color: #4f46e5 !important;
+  }
+  html[data-accent="indigo"] .hover\:bg-blue-700:hover {
+    background-color: #4338ca !important;
+  }
+  html[data-accent="indigo"] .text-blue-600 {
+    color: #6366f1 !important;
+  }
+  html[data-accent="indigo"] .border-l-blue-600 {
+    border-left-color: #4f46e5 !important;
+  }
+
+  html[data-accent="rose"] .bg-blue-600 {
+    background-color: #e11d48 !important;
+  }
+  html[data-accent="rose"] .hover\:bg-blue-700:hover {
+    background-color: #be123c !important;
+  }
+  html[data-accent="rose"] .text-blue-600 {
+    color: #f43f5e !important;
+  }
+  html[data-accent="rose"] .border-l-blue-600 {
+    border-left-color: #e11d48 !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Mobile hardening (modern smartphones)
+   --------------------------------------------------------------- */
+
+/* Utilities referenced across the app that were previously undefined */
+@utility pb-safe {
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  html,
+  body {
+    /* No accidental sideways scrolling on narrow screens */
+    max-width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* Momentum scrolling + respect notches/rounded corners */
+    -webkit-overflow-scrolling: touch;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Long words, emails and file names must never widen the layout */
+  h1, h2, h3, h4, p, span, a, td, th, li, label {
+    overflow-wrap: anywhere;
+  }
+
+  /* iOS zooms the page when a focused input is < 16px */
+  @media (max-width: 640px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* Comfortable tap targets on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    [role="button"],
+    a.btn,
+    select {
+      min-height: 44px;
+    }
+    button.icon-only,
+    a.icon-only {
+      min-width: 44px;
+    }
+  }
+
+  /* Tables always scroll inside their card instead of stretching the page */
+  table {
+    max-width: 100%;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+}
