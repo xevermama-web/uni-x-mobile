@@ -1,0 +1,6 @@
+{
+  "name": "Uni-X",
+  "description": "A modern University Management System designed to simplify communication and academic activities between Students, Faculty, and Administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

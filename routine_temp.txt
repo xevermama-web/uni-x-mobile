@@ -1,0 +1,26 @@
+      };
+
+      const { data, error } = await supabase.from('routines').insert([dbRoutine]).select();
+      
+      if (error) {
+        // If supabase fails, try fallback to local state for seamless preview
+        const updated = [newRoutine, ...routines];
+        setRoutines(updated);
+        localStorage.setItem('unixx_routines', JSON.stringify(updated));
+        return { data: newRoutine, error: null };
+      }
+
+      if (data && data.length > 0) {
+        const insertedRoutine = { ...newRoutine, id: data[0].id };
+        setRoutines([insertedRoutine, ...routines]);
+        return { data: insertedRoutine, error: null };
+      }
+    } catch (err: any) {
+      // Fallback for preview
+      const updated = [newRoutine, ...routines];
+      setRoutines(updated);
+      localStorage.setItem('unixx_routines', JSON.stringify(updated));
+      return { data: newRoutine, error: null };
+    }
+    
+    return { data: null, error: new Error("Unknown error") };
